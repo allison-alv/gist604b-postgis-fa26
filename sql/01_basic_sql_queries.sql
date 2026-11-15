@@ -10,8 +10,8 @@
 -- Hint: Use the nyc_census_blocks table
 
 -- TODO: Write your query below
-
-
+Select sum(popn_asian) as asian_pop
+from nyc_census_blocks;
 
 -- Exercise 2: What is the population of Manhattan?
 -- Expected output: one row with the total population of Manhattan
