@@ -12,6 +12,9 @@
 -- Note: Units will be in square meters (CRS is UTM Zone 18N, EPSG:26918)
 
 -- TODO: Write your query below
+select ST_Area(geom) as new_brighton_area_sq_m
+from nyc_neighborhoods
+where name = 'New Brighton';
 
 
 
@@ -28,7 +31,9 @@
 -- Hint: Filter rows where boroname = 'The Bronx'
 
 -- TODO: Write your query below
-
+select ST_area(ST_Union(geom))/4046.86 as bronx_area_acres
+from nyc_neighborhoods
+where boroname = 'The Bronx';
 
 
 
@@ -44,7 +49,9 @@
 -- Hint: ST_NumInteriorRings(geom) = 0 means no holes (interior rings)
 
 -- TODO: Write your query below
-
+select count(*) as no_hole_polygons
+from nyc_census_blocks
+where ST_NumInteriorRings(geom) = 0;
 
 
 
