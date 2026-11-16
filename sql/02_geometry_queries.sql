@@ -67,7 +67,8 @@ where ST_NumInteriorRings(geom) = 0;
 -- Hint: Use the nyc_streets table
 
 -- TODO: Write your query below
-
+select sum(ST_Length(geom)) / 1609.34 as total_length_miles
+from nyc_streets;
 
 
 
@@ -83,8 +84,9 @@ where ST_NumInteriorRings(geom) = 0;
 -- Hint: Filter rows where name = '5th Ave'
 
 -- TODO: Write your query below
-
-
+select sum(ST_Length(geom)) as fifth_ave_length
+from nyc_streets
+where name = '5th Ave';
 
 
 -- Exercise 6: What is the JSON representation of the boundary of 'Soho'?
@@ -98,8 +100,9 @@ where ST_NumInteriorRings(geom) = 0;
 -- Hint: Filter rows where name = 'Soho'
 
 -- TODO: Write your query below
-
-
+select ST_AsGeoJSON(geom) as soho_geojson
+from nyc_neighborhoods
+where name = 'Soho';
 
 
 -- Exercise 7: How many polygons are in the 'Coney Island' multipolygon?
@@ -112,6 +115,9 @@ where ST_NumInteriorRings(geom) = 0;
 -- Hint: Use num_coney_island_polygons as the output alias
 -- Hint: Use the nyc_neighborhoods table
 -- Hint: Filter rows where name = 'Coney Island'
+select ST_NumGeometries(geom) as num_coney_island_polygons
+from nyc_neighborhoods
+where name = 'Coney Island';
 
 
 
@@ -130,6 +136,8 @@ where ST_NumInteriorRings(geom) = 0;
 -- Hint: Use the nyc_streets table
 -- Hint: ORDER BY ST_Length(geom) DESC OR use the alias length_meters
 -- Hint: Use LIMIT 5
-
-
+select name, ST_Length(geom) as length_meters
+from nyc_streets
+order by length_meters desc
+limit 5;
 
