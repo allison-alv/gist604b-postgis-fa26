@@ -52,7 +52,14 @@ where
 -- Hint: Exclude NULL street names using name IS NOT NULL in the WHERE clause
 
 -- TODO: Write your query below
-
+select name
+from nyc_streets
+where
+    ST_Intersects(geom, (select geom
+    from nyc_streets
+    where name = 'Queensboro Brg'))
+        and name != 'Queensboro Brg'
+        and name IS NOT NULL;
 
 
 
@@ -68,5 +75,8 @@ where
 
 -- TODO: Write your query below
 
-
-
+select sum(popn_total) as total_population
+from nyc_census_blocks
+where ST_DWithin(geom, (select geom
+    from nyc_streets
+    where name = 'Queensboro Brg'), 50);
