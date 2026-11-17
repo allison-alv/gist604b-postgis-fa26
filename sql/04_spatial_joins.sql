@@ -16,6 +16,11 @@
 -- Hint: Filter rows where n.name = 'East Village'
 
 -- TODO: Write your query below
+select ss.name, ss.routes
+from nyc_subway_stations as ss
+join nyc_neighborhoods as n
+    on ST_Intersects(ss.geom, n.geom)
+where n.name = 'East Village';
 
 
 
