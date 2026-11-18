@@ -44,6 +44,13 @@ where n.name = 'East Village';
 -- Hint: Filter rows where ss.routes LIKE '%7%'
 
 -- TODO: Write your query below
+select distinct n.name as neighborhood_name
+from nyc_subway_stations as ss
+join nyc_neighborhoods as n
+    on ST_Intersects(ss.geom, n.geom)
+where ss.routes like '%7%';
+
+
 
 
 
@@ -60,7 +67,11 @@ where n.name = 'East Village';
 -- Hint: Filter rows where n.name = 'Financial District'
 
 -- TODO: Write your query below
-
+select sum(cb.popn_total) as total_population
+from nyc_census_blocks as cb
+join nyc_neighborhoods as n
+    on ST_Intersects(cb.geom, n.geom)
+where n.name = 'Financial District';
 
 
 
@@ -81,5 +92,10 @@ where n.name = 'East Village';
 
 -- TODO: Write your query below
 
-
+select n.name, SUM(cb.popn_total) / (ST_Area(n.geom) / 1000000.0) as population_density_per_sqkm
+from nyc_census_blocks as cb
+join nyc_neighborhoods as n
+    on ST_Intersects(cb.geom, n.geom)
+where n.name IN ('East Village', 'West Village')
+GROUP BY n.name, n.geom;
 
